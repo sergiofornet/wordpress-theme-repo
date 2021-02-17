@@ -156,10 +156,10 @@ function wordpress_theme_repo_scripts() {
 	}
 
 	// Vendor scripts
-	wp_enqueue_script( 'britaprinz-vendor', get_theme_file_uri('assets/js/vendor.min.js'), array( 'wp-polyfill' ), BRITAPRINZ_THEME_VERSION, true );
+	wp_enqueue_script( 'britaprinz-vendor', get_theme_file_uri('assets/js/vendor.min.js'), array(), WORDPRESS_THEME_REPO_VERSION, true );
 
 	// Main custom script
-	wp_enqueue_script( 'britaprinz-custom', get_theme_file_uri('assets/js/custom.js'), array(), BRITAPRINZ_THEME_VERSION, true );
+	wp_enqueue_script( 'britaprinz-custom', get_theme_file_uri('assets/js/custom.js'), array(), WORDPRESS_THEME_REPO_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'wordpress_theme_repo_scripts' );
 
