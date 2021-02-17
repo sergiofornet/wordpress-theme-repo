@@ -9,7 +9,7 @@
 
 if ( ! defined( 'WORDPRESS_THEME_REPO_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'WORDPRESS_THEME_REPO_VERSION', '1.0.0' );
+	define( 'WORDPRESS_THEME_REPO_VERSION', wp_get_theme( 'wordpress-theme-repo' )->version );
 }
 
 if ( ! function_exists( 'wordpress_theme_repo_setup' ) ) :
