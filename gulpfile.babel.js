@@ -67,9 +67,9 @@ const zip = require('gulp-zip'); // Zip plugin or theme file.
 /**
  * Custom Error Handler.
  *
- * @param Mixed err
+ * @param {*} r Error.
  */
-const errorHandler = r => {
+const errorHandler = (r) => {
 	notify.onError('\n\n❌  ===> ERROR: <%= error.message %>\n')(r);
 	beep();
 
@@ -80,22 +80,23 @@ const errorHandler = r => {
  * Task: `browser-sync`.
  *
  * Live Reloads, CSS injections, Localhost tunneling.
- * @link http://www.browsersync.io/docs/options/
  *
- * @param {Mixed} done Done.
+ * {@link http://www.browsersync.io/docs/options/}
+ *
+ * @param {*} done Done.
  */
-const browsersync = done => {
+const browsersync = (done) => {
 	browserSync.init({
 		proxy: config.projectURL,
 		open: config.browserAutoOpen,
 		injectChanges: config.injectChanges,
-		watchEvents: ['change', 'add', 'unlink', 'addDir', 'unlinkDir']
+		watchEvents: ['change', 'add', 'unlink', 'addDir', 'unlinkDir'],
 	});
 	done();
 };
 
 // Helper function to allow browser reload with Gulp 4.
-const reload = done => {
+const reload = (done) => {
 	browserSync.reload();
 	done();
 };
@@ -116,28 +117,28 @@ const reload = done => {
  */
 gulp.task('styles', () => {
 	return gulp
-		.src(config.styleSRC, {allowEmpty: true})
+		.src(config.styleSRC, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init())
 		.pipe(
 			sass({
 				errLogToConsole: config.errLogToConsole,
 				outputStyle: config.outputStyle,
-				precision: config.precision
+				precision: config.precision,
 			})
 		)
 		.on('error', sass.logError)
-		.pipe(sourcemaps.write({includeContent: false}))
-		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(sourcemaps.write({ includeContent: false }))
+		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(autoprefixer(config.BROWSERS_LIST))
 		.pipe(sourcemaps.write('./'))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.styleDestination))
 		.pipe(filter('**/*.css')) // Filtering stream to only css files.
-		.pipe(mmq({log: true})) // Merge Media Queries only for .min.css version.
+		.pipe(mmq({ log: true })) // Merge Media Queries only for .min.css version.
 		.pipe(browserSync.stream()) // Reloads style.css if that is enqueued.
-		.pipe(rename({suffix: '.min'}))
-		.pipe(minifycss({maxLineLen: 10}))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(minifycss({ maxLineLen: 10 }))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.styleDestination))
 		.pipe(filter('**/*.css')) // Filtering stream to only css files.
@@ -145,7 +146,7 @@ gulp.task('styles', () => {
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> STYLES — completed!\n',
-				onLast: true
+				onLast: true,
 			})
 		);
 });
@@ -166,28 +167,28 @@ gulp.task('styles', () => {
  */
 gulp.task('woocommerceStyles', () => {
 	return gulp
-		.src(config.woocommerceStyleSRC, {allowEmpty: true})
+		.src(config.woocommerceStyleSRC, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init())
 		.pipe(
 			sass({
 				errLogToConsole: config.errLogToConsole,
 				outputStyle: config.outputStyle,
-				precision: config.precision
+				precision: config.precision,
 			})
 		)
 		.on('error', sass.logError)
-		.pipe(sourcemaps.write({includeContent: false}))
-		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(sourcemaps.write({ includeContent: false }))
+		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(autoprefixer(config.BROWSERS_LIST))
 		.pipe(sourcemaps.write('./'))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.styleDestination))
 		.pipe(filter('**/*.css')) // Filtering stream to only css files.
-		.pipe(mmq({log: true})) // Merge Media Queries only for .min.css version.
+		.pipe(mmq({ log: true })) // Merge Media Queries only for .min.css version.
 		.pipe(browserSync.stream()) // Reloads style.css if that is enqueued.
-		.pipe(rename({suffix: '.min'}))
-		.pipe(minifycss({maxLineLen: 10}))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(minifycss({ maxLineLen: 10 }))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.styleDestination))
 		.pipe(filter('**/*.css')) // Filtering stream to only css files.
@@ -195,7 +196,7 @@ gulp.task('woocommerceStyles', () => {
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> WOOCOMMERCE STYLES — completed!\n',
-				onLast: true
+				onLast: true,
 			})
 		);
 });
@@ -217,30 +218,30 @@ gulp.task('woocommerceStyles', () => {
  */
 gulp.task('stylesRTL', () => {
 	return gulp
-		.src(config.styleSRC, {allowEmpty: true})
+		.src(config.styleSRC, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init())
 		.pipe(
 			sass({
 				errLogToConsole: config.errLogToConsole,
 				outputStyle: config.outputStyle,
-				precision: config.precision
+				precision: config.precision,
 			})
 		)
 		.on('error', sass.logError)
-		.pipe(sourcemaps.write({includeContent: false}))
-		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(sourcemaps.write({ includeContent: false }))
+		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(autoprefixer(config.BROWSERS_LIST))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
-		.pipe(rename({suffix: '-rtl'})) // Append "-rtl" to the filename.
+		.pipe(rename({ suffix: '-rtl' })) // Append "-rtl" to the filename.
 		.pipe(rtlcss()) // Convert to RTL.
 		.pipe(sourcemaps.write('./')) // Output sourcemap for style-rtl.css.
 		.pipe(gulp.dest(config.styleDestination))
 		.pipe(filter('**/*.css')) // Filtering stream to only css files.
 		.pipe(browserSync.stream()) // Reloads style.css or style-rtl.css, if that is enqueued.
-		.pipe(mmq({log: true})) // Merge Media Queries only for .min.css version.
-		.pipe(rename({suffix: '.min'}))
-		.pipe(minifycss({maxLineLen: 10}))
+		.pipe(mmq({ log: true })) // Merge Media Queries only for .min.css version.
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(minifycss({ maxLineLen: 10 }))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.styleDestination))
 		.pipe(filter('**/*.css')) // Filtering stream to only css files.
@@ -248,7 +249,7 @@ gulp.task('stylesRTL', () => {
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> STYLES RTL — completed!\n',
-				onLast: true
+				onLast: true,
 			})
 		);
 });
@@ -266,7 +267,7 @@ gulp.task('stylesRTL', () => {
  */
 gulp.task('vendorsJS', () => {
 	return gulp
-		.src(config.jsVendorSRC, {since: gulp.lastRun('vendorsJS')}) // Only run on changed files.
+		.src(config.jsVendorSRC, { since: gulp.lastRun('vendorsJS') }) // Only run on changed files.
 		.pipe(plumber(errorHandler))
 		.pipe(
 			babel({
@@ -274,10 +275,10 @@ gulp.task('vendorsJS', () => {
 					[
 						'@babel/preset-env', // Preset to compile your modern JS to ES5.
 						{
-							targets: {browsers: config.BROWSERS_LIST} // Target browser list to support.
-						}
-					]
-				]
+							targets: { browsers: config.BROWSERS_LIST }, // Target browser list to support.
+						},
+					],
+				],
 			})
 		)
 		.pipe(remember(config.jsVendorSRC)) // Bring all files back to stream.
@@ -287,7 +288,7 @@ gulp.task('vendorsJS', () => {
 		.pipe(
 			rename({
 				basename: config.jsVendorFile,
-				suffix: '.min'
+				suffix: '.min',
 			})
 		)
 		.pipe(uglify())
@@ -296,7 +297,7 @@ gulp.task('vendorsJS', () => {
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> VENDOR JS — completed!\n',
-				onLast: true
+				onLast: true,
 			})
 		);
 });
@@ -314,7 +315,7 @@ gulp.task('vendorsJS', () => {
  */
 gulp.task('customJS', () => {
 	return gulp
-		.src(config.jsCustomSRC, {since: gulp.lastRun('customJS')}) // Only run on changed files.
+		.src(config.jsCustomSRC, { since: gulp.lastRun('customJS') }) // Only run on changed files.
 		.pipe(plumber(errorHandler))
 		.pipe(
 			babel({
@@ -322,23 +323,23 @@ gulp.task('customJS', () => {
 					[
 						'@babel/preset-env', // Preset to compile your modern JS to ES5.
 						{
-							targets: {browsers: config.BROWSERS_LIST} // Target browser list to support.
-						}
-					]
-				]
+							targets: { browsers: config.BROWSERS_LIST }, // Target browser list to support.
+						},
+					],
+				],
 			})
 		)
 		.pipe(remember(config.jsCustomSRC)) // Bring all files back to stream.
-		// .pipe(order( [ // order scripts
-		// 	'*.js',
-		// ] ) )
+		.pipe(order( [ // order scripts
+			'*.js',
+		] ) )
 		.pipe(concat(config.jsCustomFile + '.js'))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.jsCustomDestination))
 		.pipe(
 			rename({
 				basename: config.jsCustomFile,
-				suffix: '.min'
+				suffix: '.min',
 			})
 		)
 		.pipe(uglify())
@@ -366,7 +367,8 @@ gulp.task('customJS', () => {
  * again, do it with the command `gulp images`.
  *
  * Read the following to change these options.
- * @link https://github.com/sindresorhus/gulp-imagemin
+ *
+ * {@link https://github.com/sindresorhus/gulp-imagemin}
  */
 gulp.task('images', () => {
 	return gulp
@@ -374,12 +376,12 @@ gulp.task('images', () => {
 		.pipe(
 			cache(
 				imagemin([
-					imagemin.gifsicle({interlaced: true}),
-					imagemin.mozjpeg({quality: 90, progressive: true}),
-					imagemin.optipng({optimizationLevel: 3}), // 0-7 low-high.
+					imagemin.gifsicle({ interlaced: true }),
+					imagemin.mozjpeg({ quality: 90, progressive: true }),
+					imagemin.optipng({ optimizationLevel: 3 }), // 0-7 low-high.
 					imagemin.svgo({
-						plugins: [{removeViewBox: true}, {cleanupIDs: false}]
-					})
+						plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
+					}),
 				])
 			)
 		)
@@ -387,7 +389,7 @@ gulp.task('images', () => {
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> IMAGES — completed!\n',
-				onLast: true
+				onLast: true,
 			})
 		);
 });
@@ -421,14 +423,14 @@ gulp.task('translate', () => {
 				package: config.packageName,
 				bugReport: config.bugReport,
 				lastTranslator: config.lastTranslator,
-				team: config.team
+				team: config.team,
 			})
 		)
 		.pipe(gulp.dest(config.translationDestination + '/' + config.translationFile))
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> TRANSLATE — completed!\n',
-				onLast: true
+				onLast: true,
 			})
 		);
 });
