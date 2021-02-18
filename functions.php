@@ -143,33 +143,33 @@ add_action( 'widgets_init', 'wordpress_theme_repo_widgets_init' );
  * Enqueue scripts and styles.
  */
 function wordpress_theme_repo_scripts() {
-	// Main stylesheet
+	// Main stylesheet.
 	wp_enqueue_style( 'wordpress-theme-repo-style', get_stylesheet_uri(), array(), WORDPRESS_THEME_REPO_VERSION );
 	wp_style_add_data( 'wordpress-theme-repo-style', 'rtl', 'replace' );
 
-	// Main navigation script
+	// Main navigation script.
 	wp_enqueue_script( 'wordpress-theme-repo-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), WORDPRESS_THEME_REPO_VERSION, true );
 
-	// Comments script
+	// Comments script.
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	// Vendor scripts
-	wp_enqueue_script( 'britaprinz-vendor', get_theme_file_uri('assets/js/vendor.min.js'), array(), WORDPRESS_THEME_REPO_VERSION, true );
+	// Vendor scripts.
+	wp_enqueue_script( 'britaprinz-vendor', get_theme_file_uri( 'assets/js/vendor.min.js' ), array(), WORDPRESS_THEME_REPO_VERSION, true );
 
-	// Main custom script
-	wp_enqueue_script( 'britaprinz-custom', get_theme_file_uri('assets/js/custom.js'), array(), WORDPRESS_THEME_REPO_VERSION, true );
+	// Main custom script.
+	wp_enqueue_script( 'britaprinz-custom', get_theme_file_uri( 'assets/js/custom.js' ), array(), WORDPRESS_THEME_REPO_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'wordpress_theme_repo_scripts' );
 
 /**
  * Enqueue admin scripts
  */
-// function britaprinz_admin_scripts() {
-// 	// Carbon fields yoast script (if Carbon Fields and Yoast used)
-// 	wp_enqueue_script( 'crb-admin', get_stylesheet_directory_uri() . '/assets/js/admin.js', array( 'carbon-fields-yoast' ) );
-// }
+function britaprinz_admin_scripts() {
+	// Carbon fields yoast script (if Carbon Fields and Yoast used).
+	wp_enqueue_script( 'crb-admin', get_stylesheet_directory_uri() . '/assets/js/admin.js', array( 'carbon-fields-yoast' ), '1.0.0', true );
+}
 // add_action( 'admin_enqueue_scripts', 'britaprinz_admin_scripts' );
 
 /**
