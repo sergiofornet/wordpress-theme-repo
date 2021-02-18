@@ -1,6 +1,6 @@
 === Wordpress_Theme_Repo ===
 
-Contributors: automattic
+Contributors: automattic, bettysymington
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
 
 Requires at least: 4.5
@@ -14,7 +14,7 @@ A starter theme called Wordpress_Theme_Repo, or underscores.
 
 == Description ==
 
-Hi. I'm a starter theme called Wordpress_Theme_Repo, or underscores, if you like. I'm a theme meant for hacking so don't use me as a Parent Theme. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
+Hi. I'm a starter theme called Wordpress_Theme_Repo, or wordpress-theme-repo, if you like. I'm a theme meant for hacking so don't use me as a Parent Theme. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
 
 == Installation ==
 
@@ -37,3 +37,4 @@ _s includes support for WooCommerce and for Infinite Scroll in Jetpack.
 
 * Based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
 * normalize.css https://necolas.github.io/normalize.css/, (C) 2012-2018 Nicolas Gallagher and Jonathan Neal, [MIT](https://opensource.org/licenses/MIT)
+* WPGulp https://github.com/ahmadawais/WPGulp/, Copyright (c) 2010-∞, Ahmad Awais, [MIT](https://opensource.org/licenses/MIT)
