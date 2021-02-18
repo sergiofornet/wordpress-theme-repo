@@ -104,11 +104,11 @@ const zipIgnoreGlob = [
 	'!./assets/scss',
 	'!./assets/img/raw/**/*',
 	'!./assets/img/raw',
-	`!${imgSRC}`,
-	`!${styleSRC}`,
-	`!${woocommerceStyleSRC}`,
-	`!${jsCustomSRC}`,
-	`!${jsVendorSRC}`,
+	`!${ imgSRC }`,
+	`!${ styleSRC }`,
+	`!${ woocommerceStyleSRC }`,
+	`!${ jsCustomSRC }`,
+	`!${ jsVendorSRC }`,
 ];
 
 // >>>>> Translation options.
@@ -172,5 +172,5 @@ module.exports = {
 	bugReport,
 	lastTranslator,
 	team,
-	BROWSERS_LIST
+	BROWSERS_LIST,
 };
