@@ -3,12 +3,12 @@ module.exports = {
 		browser: true,
 		commonjs: true,
 		es6: true,
-		node: true
+		node: true,
 	},
 	// extends: ['eslint:recommended', 'wordpress'],
 	extends: [ 'plugin:@wordpress/eslint-plugin/esnext' ],
 	parserOptions: {
-		sourceType: 'module'
+		sourceType: 'module',
 	},
 	rules: {
 		// Disable weird WP spacing rules.
@@ -18,7 +18,12 @@ module.exports = {
 		indent: ['error', 'tab'],
 		semi: ['error', 'always'],
 		quotes: ['error', 'single'],
-		'linebreak-style': ['error', 'unix']
-	}
+		'linebreak-style': ['error', 'unix'],
+	},
+	settings: {
+		jsdoc: {
+			mode: 'closure',
+		},
+	},
 };
-``;
+'';
