@@ -93,7 +93,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="wordpress-theme-repo" />
+			<property name="prefixes" type="array" value="wordpress_theme_repo" />
 		</properties>
 	</rule>
 
