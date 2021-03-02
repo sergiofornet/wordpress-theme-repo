@@ -17,6 +17,7 @@
  *
  * @tutorial https://github.com/ahmadawais/WPGulp
  * @author Ahmad Awais <https://twitter.com/MrAhmadAwais/>
+ * @author Betty Symington <contact@betty-symington.xyz>
  */
 
 /**
@@ -313,7 +314,7 @@ gulp.task('vendorsJS', () => {
  *
  * This task does the following:
  *     1. Gets the source folder for JS custom files
- *     2. Concatenates all the files and generates custom.js
+ *     2. Bundles modules and transpiles code into custom.js
  *     3. Renames the JS file with suffix .min.js
  *     4. Uglifes/Minifies the JS file and generates custom.min.js
  */
