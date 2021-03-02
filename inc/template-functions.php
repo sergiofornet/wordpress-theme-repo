@@ -61,6 +61,8 @@ function wordpress_theme_repo_disable_comments_status() {
 
 /**
  * Hide existing comments.
+ * 
+ * @param array $comments An array of existing comments.
  */ 
 function wordpress_theme_repo_disable_comments_hide_existing_comments( $comments ) {
 	$comments = array();
@@ -143,6 +145,8 @@ add_filter( 'login_errors', 'wordpress_theme_repo_login_errors' );
 
 /** 
  * Disable url guess.
+ * 
+ * @param string $url Requested url.
  */
 function wordpress_theme_repo_stop_guessing( $url ) {
 	if ( is_404() ) {
@@ -177,6 +181,8 @@ add_action( 'template_redirect', 'wordpress_theme_repo_disable_author_page' );
 
 /**
  * Modify default queries
+ * 
+ * @param WPQuery $query Current WP Query.
  */
 function wordpress_theme_repo_modify_queries( $query ) {
 

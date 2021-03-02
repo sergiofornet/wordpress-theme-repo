@@ -156,21 +156,21 @@ function wordpress_theme_repo_scripts() {
 	}
 
 	// Vendor scripts.
-	wp_enqueue_script( 'britaprinz-vendor', get_theme_file_uri( 'assets/js/vendor.min.js' ), array(), WORDPRESS_THEME_REPO_VERSION, true );
+	wp_enqueue_script( 'wordpress-theme-repo-vendor', get_theme_file_uri( 'assets/js/vendor.min.js' ), array(), WORDPRESS_THEME_REPO_VERSION, true );
 
 	// Main custom script.
-	wp_enqueue_script( 'britaprinz-custom', get_theme_file_uri( 'assets/js/custom.js' ), array(), WORDPRESS_THEME_REPO_VERSION, true );
+	wp_enqueue_script( 'wordpress-theme-repo-custom', get_theme_file_uri( 'assets/js/custom.js' ), array(), WORDPRESS_THEME_REPO_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'wordpress_theme_repo_scripts' );
 
 /**
  * Enqueue admin scripts
  */
-function britaprinz_admin_scripts() {
+function wordpress_theme_repo_admin_scripts() {
 	// Carbon fields yoast script (if Carbon Fields and Yoast used).
 	wp_enqueue_script( 'crb-admin', get_stylesheet_directory_uri() . '/assets/js/admin.js', array( 'carbon-fields-yoast' ), '1.0.0', true );
 }
-// add_action( 'admin_enqueue_scripts', 'britaprinz_admin_scripts' );
+// add_action( 'admin_enqueue_scripts', 'wordpress_theme_repo_admin_scripts' );
 
 /**
  * Implement the Custom Header feature.
