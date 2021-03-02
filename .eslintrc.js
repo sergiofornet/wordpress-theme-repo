@@ -5,20 +5,36 @@ module.exports = {
 		es6: true,
 		node: true,
 	},
-	// extends: ['eslint:recommended', 'wordpress'],
-	extends: [ 'plugin:@wordpress/eslint-plugin/esnext' ],
+	extends: [
+		'eslint:recommended',
+		'plugin:@wordpress/eslint-plugin/esnext',
+		'plugin:prettier/recommended',
+	],
 	parserOptions: {
+		ecmaVersion: 2017,
 		sourceType: 'module',
 	},
+	plugins: ['prettier'],
 	rules: {
-		// Disable weird WP spacing rules.
-		'space-before-function-paren': 'off',
-		'space-in-parens': 'off',
-		'array-bracket-spacing': 'off', // Disable weird WP spacing rules.
-		indent: ['error', 'tab'],
-		semi: ['error', 'always'],
-		quotes: ['error', 'single'],
+		'space-before-function-paren': [
+			'error',
+			{
+				anonymous: 'always',
+				named: 'never',
+				asyncArrow: 'always',
+			},
+		],
 		'linebreak-style': ['error', 'unix'],
+		'prettier/prettier': [
+			'error',
+			{
+				trailingComma: 'es5',
+				singleQuote: true,
+				printWidth: 80,
+				useTabs: true,
+				tabWidth: 4,
+			},
+		],
 	},
 	settings: {
 		jsdoc: {
@@ -26,4 +42,3 @@ module.exports = {
 		},
 	},
 };
-'';
