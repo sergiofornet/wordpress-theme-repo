@@ -46,8 +46,8 @@ const jsVendorFile = 'vendor';
 
 // JS Custom options.
 
-// Path to JS custom scripts folder.
-const jsCustomSRC = './assets/js/custom/*.js';
+// Path to JS custom scripts file.
+const jsCustomSRC = './assets/js/custom/custom.js';
 
 // Path to place the compiled JS custom scripts file.
 const jsCustomDestination = './assets/js/';
@@ -73,7 +73,7 @@ const watchStyles = './assets/scss/**/*.scss';
 const watchJsVendor = './assets/js/vendor/*.js';
 
 // Path to all custom JS files.
-const watchJsCustom = './assets/js/custom/*.js';
+const watchJsCustom = './assets/js/custom/**/*.js';
 
 // Path to all PHP files.
 const watchPhp = './**/*.php';
@@ -104,11 +104,11 @@ const zipIgnoreGlob = [
 	'!./assets/scss',
 	'!./assets/img/raw/**/*',
 	'!./assets/img/raw',
-	`!${ imgSRC }`,
-	`!${ styleSRC }`,
-	`!${ woocommerceStyleSRC }`,
-	`!${ jsCustomSRC }`,
-	`!${ jsVendorSRC }`,
+	`!${imgSRC}`,
+	`!${styleSRC}`,
+	`!${woocommerceStyleSRC}`,
+	'!./assets/js/custom/*.js',
+	`!${jsVendorSRC}`,
 ];
 
 // >>>>> Translation options.

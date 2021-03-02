@@ -41,10 +41,14 @@ const mmq = require('gulp-merge-media-queries'); // Combine matching media queri
 const rtlcss = require('gulp-rtlcss'); // Generates RTL stylesheet.
 
 // JS related plugins.
+const rollup = require('@rbnlffl/gulp-rollup');
 const concat = require('gulp-concat'); // Concatenates JS files.
-const order = require( 'gulp-order' ); // Orders JS concatenation
+const order = require('gulp-order'); // Orders JS concatenation
 const uglify = require('gulp-uglify'); // Minifies JS files.
 const babel = require('gulp-babel'); // Compiles ESNext to browser compatible JS.
+const { babel: rollupBabel } = require('@rollup/plugin-babel');
+const commonjs = require('@rollup/plugin-commonjs');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 
 // Image related plugins.
 const imagemin = require('gulp-imagemin'); // Minify PNG, JPEG, GIF and SVG images with imagemin.
@@ -315,25 +319,39 @@ gulp.task('vendorsJS', () => {
  */
 gulp.task('customJS', () => {
 	return gulp
-		.src(config.jsCustomSRC, { since: gulp.lastRun('customJS') }) // Only run on changed files.
+		.src(config.jsCustomSRC, { nodir: true }) // Only run on custom.js.
 		.pipe(plumber(errorHandler))
 		.pipe(
-			babel({
-				presets: [
-					[
-						'@babel/preset-env', // Preset to compile your modern JS to ES5.
-						{
-							targets: { browsers: config.BROWSERS_LIST }, // Target browser list to support.
-						},
+			rollup(
+				{
+					plugins: [
+						commonjs(),
+						rollupBabel({
+							presets: [
+								[
+									'@babel/preset-env', // Preset to compile your modern JS to ES5.
+									{
+										targets: {
+											browsers: config.BROWSERS_LIST,
+										}, // Target browser list to support.
+									},
+								],
+							],
+							plugins: [
+								'@babel/plugin-transform-async-to-generator',
+								'@babel/plugin-transform-runtime',
+							], // Comment out if noy using async/await.
+							exclude: 'node_modules/**',
+							babelHelpers: 'runtime', // Use 'bundled' by default.
+						}),
+						nodeResolve(),
 					],
-				],
-			})
+				},
+				{
+					format: 'iife',
+				}
+			)
 		)
-		.pipe(remember(config.jsCustomSRC)) // Bring all files back to stream.
-		.pipe(order( [ // order scripts
-			'*.js',
-		] ) )
-		.pipe(concat(config.jsCustomFile + '.js'))
 		.pipe(lineec()) // Consistent Line Endings for non UNIX systems.
 		.pipe(gulp.dest(config.jsCustomDestination))
 		.pipe(
@@ -380,7 +398,10 @@ gulp.task('images', () => {
 					imagemin.mozjpeg({ quality: 90, progressive: true }),
 					imagemin.optipng({ optimizationLevel: 3 }), // 0-7 low-high.
 					imagemin.svgo({
-						plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
+						plugins: [
+							{ removeViewBox: true },
+							{ cleanupIDs: false },
+						],
 					}),
 				])
 			)
@@ -426,7 +447,11 @@ gulp.task('translate', () => {
 				team: config.team,
 			})
 		)
-		.pipe(gulp.dest(config.translationDestination + '/' + config.translationFile))
+		.pipe(
+			gulp.dest(
+				config.translationDestination + '/' + config.translationFile
+			)
+		)
 		.pipe(
 			notify({
 				message: '\n\n✅  ===> TRANSLATE — completed!\n',
@@ -445,7 +470,10 @@ gulp.task('translate', () => {
  */
 gulp.task('zip', () => {
 	const src = [...config.zipIncludeGlob, ...config.zipIgnoreGlob];
-	return gulp.src(src).pipe(zip(config.zipName)).pipe(gulp.dest(config.zipDestination));
+	return gulp
+		.src(src)
+		.pipe(zip(config.zipName))
+		.pipe(gulp.dest(config.zipDestination));
 });
 
 /**
@@ -455,12 +483,26 @@ gulp.task('zip', () => {
  */
 gulp.task(
 	'default',
-	gulp.parallel('styles', 'woocommerceStyles', 'vendorsJS', 'customJS', 'images', browsersync, () => {
-		gulp.watch(config.watchPhp, reload); // Reload on PHP file changes.
-		gulp.watch([config.watchStyles, '!./assets/scss/woocommerce.scss'], gulp.parallel('styles')); // Reload on SCSS file changes.
-		gulp.watch(config.woocommerceStyleSRC, gulp.parallel('woocommerceStyles')); // Reload on SCSS file changes.
-		gulp.watch(config.watchJsVendor, gulp.series('vendorsJS', reload)); // Reload on vendorsJS file changes.
-		gulp.watch(config.watchJsCustom, gulp.series('customJS', reload)); // Reload on customJS file changes.
-		gulp.watch(config.imgSRC, gulp.series('images', reload)); // Reload on customJS file changes.
-	})
+	gulp.parallel(
+		'styles',
+		'woocommerceStyles',
+		'vendorsJS',
+		'customJS',
+		'images',
+		browsersync,
+		() => {
+			gulp.watch(config.watchPhp, reload); // Reload on PHP file changes.
+			gulp.watch(
+				[config.watchStyles, '!./assets/scss/woocommerce.scss'],
+				gulp.parallel('styles')
+			); // Reload on SCSS file changes.
+			gulp.watch(
+				config.woocommerceStyleSRC,
+				gulp.parallel('woocommerceStyles')
+			); // Reload on SCSS file changes.
+			gulp.watch(config.watchJsVendor, gulp.series('vendorsJS', reload)); // Reload on vendorsJS file changes.
+			gulp.watch(config.watchJsCustom, gulp.series('customJS', reload)); // Reload on customJS file changes.
+			gulp.watch(config.imgSRC, gulp.series('images', reload)); // Reload on customJS file changes.
+		}
+	)
 );
